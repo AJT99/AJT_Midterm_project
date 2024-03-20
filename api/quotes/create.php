@@ -11,10 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $author_id = htmlspecialchars(strip_tags($data->author_id));
         $category_id = htmlspecialchars(strip_tags($data->category_id));
 
-        // Check if author_id exists
         $author_exists = checkIfExists($conn, 'authors', 'id', $author_id);
 
-        // Check if category_id exists
         $category_exists = checkIfExists($conn, 'categories', 'id', $category_id);
 
         if (!$author_exists) {
@@ -46,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode(array("message" => "Method Not Allowed"));
 }
 
-// Function to check if a record exists in the database table
 function checkIfExists($conn, $table, $field, $value)
 {
     $query = "SELECT * FROM $table WHERE $field = :value";
