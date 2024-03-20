@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
         if (!empty($data->quote) && !empty($data->author_id) && !empty($data->category_id)) {
             try {
                 $author_exists = checkIfExists($conn, 'authors', 'id', $data->author_id);
-
                 $category_exists = checkIfExists($conn, 'categories', 'id', $data->category_id);
 
                 if (!$author_exists) {
