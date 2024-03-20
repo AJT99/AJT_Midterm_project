@@ -9,8 +9,8 @@ $quote_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     if (!empty($quote_id)) {
         if (!checkIfExists($conn, 'quotes', 'id', $quote_id)) {
-            echo json_encode(array("message" => "Quote ID not found"));
-            exit;
+            echo json_encode(array("message" => "NoQuotesFound"));
+            exit; 
         }
 
         $data = json_decode(file_get_contents("php://input"));
@@ -22,10 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
                 if (!$author_exists) {
                     echo json_encode(array("message" => "author_idNotFound"));
-                    exit; 
                 } elseif (!$category_exists) {
-                    echo json_encode(array("message" => "category_id Not Found"));
-                    exit;
+                    echo json_encode(array("message" => "category_idNotFound"));
                 } else {
                     $query = "UPDATE quotes SET quote = :quote, author_id = :author_id, category_id = :category_id WHERE id = :id";
                     $stmt = $conn->prepare($query);
@@ -44,19 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
                 echo json_encode(array("message" => "Database error: " . $e->getMessage()));
             }
         } else {
-            echo json_encode(array("message" => "Missing required data."));
+            echo json_encode(array("message" => "MissingRequiredParameters"));
         }
     } else {
         echo json_encode(array("message" => "Quote ID parameter is missing."));
     }
-} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REQUEST_URI"] == "/quotes/") {
-    echo json_encode(array("message" => "Missing Required Parameters"));
-} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['author_id'])) {
-    echo json_encode(array("message" => "author_id Not Found"));
-} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['category_id'])) {
-    echo json_encode(array("message" => "category_id Not Found"));
 } else {
-    echo json_encode(array("message" => "No Quotes Found"));
+    echo json_encode(array("message" => "Method Not Allowed"));
 }
 
 function checkIfExists($conn, $table, $field, $value)
