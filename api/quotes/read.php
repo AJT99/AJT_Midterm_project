@@ -2,7 +2,10 @@
 include_once '../config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $query = "SELECT * FROM quotes";
+    $query = "SELECT q.id, q.quote, a.author, c.category
+              FROM quotes q
+              LEFT JOIN authors a ON q.author_id = a.id
+              LEFT JOIN categories c ON q.category_id = c.id";
     $stmt = $conn->query($query);
 
     if ($stmt->rowCount() > 0) {
@@ -12,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $quote_item = array(
                 "id" => $id,
                 "quote" => $quote,
-                "author_id" => $author_id,
-                "category_id" => $category_id
+                "author" => $author,
+                "category" => $category
             );
             array_push($quotes_arr, $quote_item);
         }
