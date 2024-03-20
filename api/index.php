@@ -26,6 +26,11 @@ switch ($request_method) {
         break;
 }
 ?>
+
+
+<!DOCTYPE html>
 <html>
-    <h1> Welcome to Avery's Quote Database</h1>
+<head>
+    <title>Welcome to Avery's Quote Database</title>
+</head>
 </html>
