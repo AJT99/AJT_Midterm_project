@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
             echo json_encode(array("message" => "Database error: " . $e->getMessage()));
         }
     } else {
-        echo json_encode(array("message" => "Missing required data."));
+        echo json_encode(array("message" => "Missing Required Parameters"));
     }
 } else {
     echo json_encode(array("message" => "Method Not Allowed"));
