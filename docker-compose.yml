@@ -1,11 +1,23 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  php-apache:
-    build:
+  php:
+    build: 
       context: .
       dockerfile: Dockerfile
+    container_name: php-container
+    restart: always
     ports:
-    - "80:80"
-    volumes: 
-    - .:/var/www/html
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: quotesdb
+    volumes:
+      - ./mysql-data:/var/lib/mysql
