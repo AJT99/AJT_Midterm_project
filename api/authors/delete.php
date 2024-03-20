@@ -1,7 +1,9 @@
 <?php
 include_once '../config.php';
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $author_id = isset($_GET['id']) ? $_GET['id'] : null;
 
@@ -22,8 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     } else {
         echo json_encode(array("message" => "Author ID is missing."));
     }
+} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REQUEST_URI"] == "/authors/") {
+    $query = "SELECT id FROM authors";
+    $stmt = $conn->query($query);
+    $authors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (count($authors) > 0) {
+        echo json_encode($authors);
+    } else {
+        echo json_encode(array("message" => "No Authors Found"));
+    }
 } else {
     echo json_encode(array("message" => "Method Not Allowed"));
 }
-
 ?>
