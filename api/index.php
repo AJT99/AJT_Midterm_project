@@ -1,5 +1,7 @@
+<html>
+    <h1> Welcome to Avery's project</h1>
+</html>
 <?php
-
 include_once 'config.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
