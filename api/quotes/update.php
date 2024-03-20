@@ -15,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     $stmt = $conn->prepare("SELECT COUNT(*) FROM quotes WHERE id = :quote_id");
     $stmt->bindParam(':quote_id', $quote_id);
     $stmt->execute();
-    $quote_exists = $stmt->fetchColumn();
+    $quote_count = $stmt->fetchColumn();
 
-    if (!$quote_exists) {
+    if ($quote_count == 0) {
         echo json_encode(array("message" => "No Quotes Found"));
         exit;
     }
