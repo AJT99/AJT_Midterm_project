@@ -22,4 +22,5 @@ switch ($endpoint) {
         echo json_encode(array("message" => "Endpoint not found"));
         break;
 }
+
 ?>
