@@ -1,5 +1,5 @@
 <html>
-    <h1> Welcome to Avery's project</h1>
+    <h1> Welcome to Avery's Quote Database</h1>
 </html>
 <?php
 include_once 'config.php';
