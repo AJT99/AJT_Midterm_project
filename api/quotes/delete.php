@@ -5,29 +5,15 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-    $quote_id = isset($_GET['id']) ? $_GET['id'] : null;
+    $query = "SELECT id FROM quotes";
+    $stmt = $conn->query($query);
+    $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if (!empty($quote_id)) {
-        $query = "DELETE FROM quotes WHERE id = :id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':id', $quote_id);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            echo json_encode(array("message" => "Quote deleted successfully."));
-        } else {
-            echo json_encode(array("message" => "No Quotes Found"));
-        }
+    if (!empty($quotes)) {
+        $quote_ids = array_column($quotes, 'id');
+        echo json_encode($quote_ids);
     } else {
-        $query = "SELECT id FROM quotes";
-        $stmt = $conn->query($query);
-        $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($quotes) {
-            echo json_encode($quotes);
-        } else {
-            echo json_encode(array("message" => "No Quotes Found"));
-        }
+        echo json_encode(array("message" => "No Quotes Found"));
     }
 } else {
     echo json_encode(array("message" => "Method Not Allowed"));
