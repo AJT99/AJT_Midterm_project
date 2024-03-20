@@ -2,6 +2,7 @@
 include_once '../config.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     if (isset($_GET['id'])) {
         $category_id = $_GET['id'];
@@ -22,10 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
             echo json_encode(array("message" => "Missing Required Parameters"));
         }
     } else {
-        echo json_encode(array("message" => "Category ID parameter is missing."));
+        echo json_encode(array("message" => "Missing Required Parameters"));
     }
 } else {
-    echo json_encode(array("message" => "Method Not Allowed"));
+    $stmt = $conn->query("SELECT COUNT(*) FROM categories");
+    $category_count = $stmt->fetchColumn();
+    if ($category_count === 0) {
+        echo json_encode(array("message" => "No Categories Found"));
+    } else {
+        echo json_encode(array("message" => "Method Not Allowed"));
+    }
 }
-
 ?>
