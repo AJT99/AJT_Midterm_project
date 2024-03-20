@@ -1,6 +1,6 @@
 <?php
 include_once '../config.php';
-
+header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     try {
         $stmt = $conn->query("SELECT * FROM authors");

@@ -1,6 +1,6 @@
 <?php
 include_once '../config.php';
-
+header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $query = "SELECT q.id, q.quote, a.author, c.category
               FROM quotes q

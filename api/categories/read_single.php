@@ -1,6 +1,6 @@
 <?php
 include_once '../config.php';
-
+header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     try {
         if (isset($_GET['id'])) {

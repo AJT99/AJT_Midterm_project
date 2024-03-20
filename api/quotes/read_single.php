@@ -1,6 +1,6 @@
 <?php
 include_once '../config.php';
-
+header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['id'])) {
         $quote_id = $_GET['id'];
