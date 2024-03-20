@@ -1,26 +1,24 @@
 <?php
 include_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-    exit();
-}
+$request_uri = $_SERVER['REQUEST_URI'];
 
-$request_method = $_SERVER["REQUEST_METHOD"];
+$base_path = "/api";
 
-switch ($request_method) {
-    case 'GET':
+$endpoint = substr($request_uri, strlen($base_path));
+
+switch ($endpoint) {
+    case '/authors':
+        include "authors/index.php";
         break;
-    case 'POST':
-        include_once 'handle_post.php'; 
+    case '/categories':
+        include "categories/index.php";
         break;
-    case 'PUT':
-        break;
-    case 'DELETE':
+    case '/quotes':
+        include "quotes/index.php";
         break;
     default:
-        echo json_encode(array("message" => "Method Not Allowed"));
+        echo json_encode(array("message" => "Endpoint not found"));
         break;
 }
 ?>

@@ -8,7 +8,7 @@ $db_pass = getenv('DATABASE_PASSWORD');
 try {
     $conn = new PDO("pgsql:host=$db_host;port=$db_port;dbname=$db_name", $db_user, $db_pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
+    echo "Connected successfully ";
 } catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
