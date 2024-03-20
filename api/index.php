@@ -1,6 +1,3 @@
-<html>
-    <h1> Welcome to Avery's Quote Database</h1>
-</html>
 <?php
 include_once 'config.php';
 header('Access-Control-Allow-Origin: *');
@@ -28,5 +25,7 @@ switch ($request_method) {
         echo json_encode(array("message" => "Method Not Allowed"));
         break;
 }
-
 ?>
+<html>
+    <h1> Welcome to Avery's Quote Database</h1>
+</html>
