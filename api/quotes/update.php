@@ -15,9 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
             $stmt->execute();
             $author_exists = $stmt->fetchColumn();
 
-            if (!$author_exists) {
-                echo json_encode(array("message" => "author_id Not Found"));
-            } else {
+            if ($author_exists) {
                 $stmt = $conn->prepare("SELECT COUNT(*) FROM categories WHERE id = :category_id");
                 $stmt->bindParam(':category_id', $data->category_id);
                 $stmt->execute();
@@ -39,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
                         echo json_encode(array("message" => "Unable to update quote."));
                     }
                 }
+            } else {
+                echo json_encode(array("message" => "author_id Not Found"));
             }
         } else {
             echo json_encode(array("message" => "Missing Required Parameters"));
@@ -47,6 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
         echo json_encode(array("message" => "Missing Required Parameters"));
     }
 } else {
-    echo json_encode(array("message" => "Method Not Allowed"));
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM quotes");
+    $stmt->execute();
+    $quote_count = $stmt->fetchColumn();
+
+    if ($quote_count == 0) {
+        echo json_encode(array("message" => "No Quotes Found"));
+    } else {
+        echo json_encode(array("message" => "Method Not Allowed"));
+    }
 }
 ?>
