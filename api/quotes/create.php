@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(array("message" => "Missing Required Parameters"));
     }
 } elseif ($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REQUEST_URI"] == "/quotes/") {
+    // Handle GET request for /quotes/ endpoint
     $query = "SELECT id, quote, author_id, category_id FROM quotes";
     $stmt = $conn->query($query);
     $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
