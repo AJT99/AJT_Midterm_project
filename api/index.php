@@ -1,6 +1,7 @@
 <?php
 include_once 'config.php';
-
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 $request_uri = $_SERVER['REQUEST_URI'];
 
 $base_path = "/api";
