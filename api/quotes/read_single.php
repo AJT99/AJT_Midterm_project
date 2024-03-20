@@ -1,7 +1,9 @@
 <?php
 include_once '../config.php';
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['id'])) {
         $quote_id = $_GET['id'];
@@ -25,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             echo json_encode($quote_item);
         } else {
-            echo json_encode(array("message" => "Quote not found."));
+            echo json_encode(array("message" => "No Quotes Found"));
         }
     } else {
         echo json_encode(array("message" => "Quote ID parameter is missing."));
@@ -33,5 +35,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 } else {
     echo json_encode(array("message" => "Method Not Allowed"));
 }
-
 ?>
