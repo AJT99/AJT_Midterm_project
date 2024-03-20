@@ -26,11 +26,3 @@ switch ($request_method) {
         break;
 }
 ?>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to Avery's Quote Database</title>
-</head>
-</html>
