@@ -11,13 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $category_id = htmlspecialchars(strip_tags($data->category_id));
 
         $author_exists = checkIfExists($conn, 'authors', 'id', $author_id);
-
         $category_exists = checkIfExists($conn, 'categories', 'id', $category_id);
 
         if (!$author_exists) {
-            echo json_encode(array("message" => "author_id not found."));
+            echo json_encode(array("message" => "author_id Not Found"));
         } elseif (!$category_exists) {
-            echo json_encode(array("message" => "category_id not found."));
+            echo json_encode(array("message" => "category_id Not Found"));
         } else {
             try {
                 $query = "INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)";
@@ -37,8 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     } else {
-        echo json_encode(array("message" => "Missing required data."));
+        echo json_encode(array("message" => "Missing Required Parameters"));
     }
+} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REQUEST_URI"] == "/quotes/") {
+    $query = "SELECT id, quote, author_id, category_id FROM quotes";
+    $stmt = $conn->query($query);
+    $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($quotes);
 } else {
     echo json_encode(array("message" => "Method Not Allowed"));
 }
