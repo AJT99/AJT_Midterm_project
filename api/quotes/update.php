@@ -4,10 +4,14 @@ include_once '../config.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-    $quote_id = isset($_GET['id']) ? $_GET['id'] : null;
+$quote_id = isset($_GET['id']) ? $_GET['id'] : null;
 
+if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     if (!empty($quote_id)) {
+        if (!checkIfExists($conn, 'quotes', 'id', $quote_id)) {
+            echo json_encode(array("message" => "Quote ID not found"));
+        }
+
         $data = json_decode(file_get_contents("php://input"));
 
         if (!empty($data->quote) && !empty($data->author_id) && !empty($data->category_id)) {
@@ -37,23 +41,19 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
                 echo json_encode(array("message" => "Database error: " . $e->getMessage()));
             }
         } else {
-            echo json_encode(array("message" => "Missing Required Parameters"));
+            echo json_encode(array("message" => "Missing required data."));
         }
     } else {
         echo json_encode(array("message" => "Quote ID parameter is missing."));
     }
 } elseif ($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REQUEST_URI"] == "/quotes/") {
-    $query = "SELECT id, quote, author_id, category_id FROM quotes";
-    $stmt = $conn->query($query);
-    $quotes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if (count($quotes) > 0) {
-        echo json_encode($quotes);
-    } else {
-        echo json_encode(array("message" => "No Quotes Found"));
-    }
+    echo json_encode(array("message" => "Missing Required Parameters"));
+} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['author_id'])) {
+    echo json_encode(array("message" => "author_id Not Found"));
+} elseif ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['category_id'])) {
+    echo json_encode(array("message" => "category_id Not Found"));
 } else {
-    echo json_encode(array("message" => "Method Not Allowed"));
+    echo json_encode(array("message" => "No Quotes Found"));
 }
 
 function checkIfExists($conn, $table, $field, $value)
