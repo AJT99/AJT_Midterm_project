@@ -1,23 +1,25 @@
 <?php
-
 include_once 'config.php';
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
-$request_method = $_SERVER["REQUEST_METHOD"];
+$request_uri = $_SERVER['REQUEST_URI'];
 
-switch ($request_method) {
-    case 'GET':
+$base_path = "/api";
+
+$endpoint = substr($request_uri, strlen($base_path));
+
+switch ($endpoint) {
+    case '/authors':
+        include "authors/index.php";
         break;
-    case 'POST':
+    case '/categories':
+        include "categories/index.php";
         break;
-    case 'PUT':
-        break;
-    case 'DELETE':
+    case '/quotes':
+        include "quotes/index.php";
         break;
     default:
-        echo json_encode(array("message" => "Method Not Allowed"));
+        http_response_code(404);
+        echo json_encode(array("message" => "Endpoint not found"));
         break;
 }
-
 ?>
