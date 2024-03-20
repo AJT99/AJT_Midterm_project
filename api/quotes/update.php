@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     if (!empty($quote_id)) {
         if (!checkIfExists($conn, 'quotes', 'id', $quote_id)) {
             echo json_encode(array("message" => "Quote ID not found"));
+            exit;
         }
 
         $data = json_decode(file_get_contents("php://input"));
@@ -20,9 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
                 $category_exists = checkIfExists($conn, 'categories', 'id', $data->category_id);
 
                 if (!$author_exists) {
-                    echo json_encode(array("message" => "author_id Not Found"));
+                    echo json_encode(array("message" => "author_idNotFound"));
+                    exit; 
                 } elseif (!$category_exists) {
                     echo json_encode(array("message" => "category_id Not Found"));
+                    exit;
                 } else {
                     $query = "UPDATE quotes SET quote = :quote, author_id = :author_id, category_id = :category_id WHERE id = :id";
                     $stmt = $conn->prepare($query);
