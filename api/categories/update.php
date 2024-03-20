@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
                 echo json_encode(array("message" => "Unable to update category."));
             }
         } else {
-            echo json_encode(array("message" => "Missing required data."));
+            echo json_encode(array("message" => "Missing Required Parameters"));
         }
     } else {
         echo json_encode(array("message" => "Category ID parameter is missing."));
